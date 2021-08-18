@@ -1,0 +1,78 @@
+// Copyright 2021 Chai Wei Jian
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package chaiweijian.groupwallet.userservice.v1;
+
+option java_multiple_files = true;
+option java_package = "com.chaiweijian.groupwallet.userservice.v1";
+option java_outer_classname = "UserAggregateServiceProto";
+
+import "chaiweijian/groupwallet/userservice/v1/user.proto";
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+
+// Define the user aggregate service.
+service UserAggregateService {
+  // Get a single user by name.
+  rpc GetUser(GetUserRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/{name=users/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Find a single user by uid.
+  rpc FindUser(FindUserRequest) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/users:findUser"
+    };
+    option (google.api.method_signature) = "uid";
+  }
+
+  // Create a new user.
+  rpc CreateUser(CreateUserRequest) returns (User) {
+    option (google.api.http) = {
+      post: "/v1/users"
+      body: "user"
+    };
+    option (google.api.method_signature) = "user";
+  }
+}
+
+// Request to get single user.
+message GetUserRequest {
+  // The name of the user to retrieve.
+  // Format: users/{user}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "userservice.groupwallet.chaiweijian.com/User"
+    }];
+}
+
+// Request to find a single user by uid.
+message FindUserRequest {
+  // The uid of user.
+  string uid = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request to create user
+message CreateUserRequest {
+  // The user to created.
+  User user = 1 [(google.api.field_behavior) = REQUIRED];
+}

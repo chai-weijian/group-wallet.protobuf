@@ -1,0 +1,52 @@
+// Copyright 2021 Chai Wei Jian
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package chaiweijian.groupwallet.userservice.v1;
+
+option java_multiple_files = true;
+option java_package = "com.chaiweijian.groupwallet.userservice.v1";
+option java_outer_classname = "UserProto";
+
+import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+
+// A representation of user in GroupWallet.
+message User {
+  option (google.api.resource) = {
+    type: "groupwallet.chaiweijian.com/User"
+    pattern: "users/{user}"
+  };
+
+  // The resource name of the user.
+  // Format is `users/{user}`
+  string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The display name of user, allow any unicode character
+  // with max length 200. Leading and trailing whitespace
+  // will be stripped.
+  string display_name = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The email address of user.
+  string email = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The unique id to identify the user. This value comes from the system
+  // authentication provider. Currently using Firebase.
+  string uid = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The aggregate version of this user.
+  int32 aggregate_version = 15 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
