@@ -22,7 +22,6 @@ option java_outer_classname = "UserProto";
 
 import "google/api/resource.proto";
 import "google/api/field_behavior.proto";
-import "google/protobuf/timestamp.proto";
 
 // A representation of user in GroupWallet.
 message User {
@@ -35,9 +34,8 @@ message User {
   // Format is `users/{user}`
   string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // The display name of user, allow any unicode character
-  // with max length 200. Leading and trailing whitespace
-  // will be stripped.
+  // The display name of user. Format is 4 - 120 unicode characters.
+  // Leading and trailing whitespace will be stripped.
   string display_name = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The email address of user.

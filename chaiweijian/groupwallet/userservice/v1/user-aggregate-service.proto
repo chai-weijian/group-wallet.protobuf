@@ -25,6 +25,7 @@ import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/api/resource.proto";
+import "google/protobuf/field_mask.proto";
 
 // Define the user aggregate service.
 service UserAggregateService {
@@ -52,6 +53,16 @@ service UserAggregateService {
     };
     option (google.api.method_signature) = "user,user_id";
   }
+
+  // Update a user.
+  rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      patch: "/v1/{user.name=users/*}"
+      body: "user"
+    };
+    option (google.api.method_signature) = "user,update_mask";
+  }
+
 }
 
 // Request to get single user.
@@ -73,7 +84,7 @@ message FindUserRequest {
 
 // Request to create user
 message CreateUserRequest {
-  // The user to created.
+  // The user to create.
   User user = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The ID to use for the user, which will become the final component of
@@ -82,4 +93,16 @@ message CreateUserRequest {
   // This value should be 4-63 characters, and valid characters
   // are /[a-z][0-9]-/.
   string user_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request to update user
+message UpdateUserRequest {
+  // The user to update.
+  //
+  // The user's `name` field is used to identify the user to update.
+  // Format: users/{user}
+  User user = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The list of fields to update.
+  google.protobuf.FieldMask update_mask = 2;
 }
