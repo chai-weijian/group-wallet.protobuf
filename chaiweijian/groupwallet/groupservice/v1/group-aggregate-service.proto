@@ -1,0 +1,123 @@
+// Copyright 2021 Chai Wei Jian
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package chaiweijian.groupwallet.groupservice.v1;
+
+option java_multiple_files = true;
+option java_package = "com.chaiweijian.groupwallet.groupservice.v1";
+option java_outer_classname = "GroupAggregateServiceProto";
+
+import "google/api/client.proto";
+import "google/api/annotations.proto";
+import "chaiweijian/groupwallet/groupservice/v1/group.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
+import "google/protobuf/field_mask.proto";
+
+// Define the group aggregate service.
+service GroupAggregateService {
+  // Get a single group by name.
+  rpc GetGroup(GetGroupRequest) returns (Group) {
+    option (google.api.http) = {
+      get: "/v1/{name=groups/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Create a new group.
+  rpc CreateGroup(CreateGroupRequest) returns (Group) {
+    option (google.api.http) = {
+      post: "/v1/groups"
+      body: "group"
+    };
+    option (google.api.method_signature) = "group";
+  }
+
+  // Update a group.
+  rpc UpdateGroup(UpdateGroupRequest) returns (Group) {
+    option (google.api.http) = {
+      patch: "/v1/{group.name=groups/*}"
+      body: "group"
+    };
+    option (google.api.method_signature) = "group,update_mask";
+  }
+
+  // Soft delete a group.
+  rpc DeleteGroup(DeleteGroupRequest) returns (Group) {
+    option (google.api.http) = {
+      delete: "/v1/{name=groups/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
+  // Undelete a soft deleted group
+  rpc UndeleteGroup(UndeleteGroupRequest) returns (Group) {
+    option (google.api.http) = {
+      post: "/v1/{name=groups/*}:undelete"
+      body: "*"
+    };
+  }
+
+}
+
+// Request to get single group.
+message GetGroupRequest {
+  // The name of the group to retrieve.
+  // Format: groups/{group}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "groupwallet.chaiweijian.com/Group"
+    }];
+}
+
+// Request to create group
+message CreateGroupRequest {
+  // The group to create.
+  Group group = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request to update group
+message UpdateGroupRequest {
+  // The group to update.
+  //
+  // The group's `name` field is used to identify the group to update.
+  // Format: groups/{group}
+  Group group = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The list of fields to update.
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+// Request to soft delete a group
+message DeleteGroupRequest {
+  // The name of the group to delete.
+  // Format: groups/{group}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "groupwallet.chaiweijian.com/Group"
+    }];
+}
+
+// Request to undelete a soft deleted group.
+message UndeleteGroupRequest {
+  // The name of the deleted group.
+  // Format: groups/{group}
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "groupwallet.chaiweijian.com/Group"];
+}

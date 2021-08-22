@@ -107,6 +107,12 @@ message Group {
   // the expire_time.
   google.protobuf.Timestamp expire_time = 8 [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // The aggregate version of this user.
-  int32 aggregate_version = 15 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // The aggregate version of this group. The system guarantee to increment
+  // this value whenever this group change.
+  int32 aggregate_version = 14 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // This checksum is computed by the server based on the value of aggregate_version,
+  // update and delete request must include this field to ensure the
+  // client has an up-to-date value before proceeding.
+  string etag = 15;
 }
