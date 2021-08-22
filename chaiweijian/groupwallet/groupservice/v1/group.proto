@@ -95,6 +95,7 @@ message Group {
   State state = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // The base currency of this group.
+  // See [ISO-4217](https://en.wikipedia.org/wiki/ISO_4217) standard for more details.
   string currency_code = 6 [(google.api.field_behavior) = REQUIRED];
 
   // The time when this group is created.
