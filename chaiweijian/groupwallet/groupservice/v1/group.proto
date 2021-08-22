@@ -89,6 +89,9 @@ message Group {
     ACTIVE = 1;
 
     // This group is soft deleted.
+    // If the group name is reused in created method,
+    // the soft deleted group simply get overwritten and no
+    // longer recoverable, as if the expire_time has reached.
     DELETED = 2;
   }
   // The current state of this group.
