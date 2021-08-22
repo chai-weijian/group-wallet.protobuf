@@ -72,7 +72,7 @@ message GetUserRequest {
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = {
-      type: "userservice.groupwallet.chaiweijian.com/User"
+      type: "groupwallet.chaiweijian.com/User"
     }];
 }
 
