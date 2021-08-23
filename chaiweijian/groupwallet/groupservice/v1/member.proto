@@ -1,0 +1,81 @@
+// Copyright 2021 Chai Wei Jian
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package chaiweijian.groupwallet.groupservice.v1;
+
+option java_multiple_files = true;
+option java_package = "com.chaiweijian.groupwallet.groupservice.v1";
+option java_outer_classname = "MemberProto";
+
+import "google/api/resource.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+
+// A representation of single member in a group.
+message Member {
+  // The parent of Member is a Group.
+  option (google.api.resource) = {
+    type: "groupwallet.chaiweijian.com/Group"
+    pattern: "groups/{group}/members/{member}"
+  };
+
+  // The resource name for the member.
+  string name = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The resource name for the group's member.
+  string user = 2 [(google.api.resource_reference) = {
+    type: "groupwallet.chaiweijian.com/User"
+  }];
+
+  // The state of member.
+  enum State {
+    // Default value. This value is unused.
+    STATE_UNSPECIFIED = 0;
+
+    // Invitation has sent to this member and haven't get accepted.
+    PENDING = 1;
+
+    // The user accepted the invitation.
+    ACCEPTED = 2;
+
+    // The user rejected the invitation.
+    REJECTED = 3;
+
+    // This member has left the group.
+    LEFT = 4;
+
+    // This member has been removed by owner.
+    REMOVED = 5;
+  }
+
+  // The current state.
+  State state = 3;
+
+  // The time when this member is added.
+  google.protobuf.Timestamp create_time = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The time when this member is updated.
+  google.protobuf.Timestamp update_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The aggregate version of this member. The system guarantee to increment
+  // this value whenever this member change.
+  int32 aggregate_version = 14 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // This checksum is computed by the server based on the value of aggregate_version,
+  // update and delete request must include this field to ensure the
+  // client has an up-to-date value before proceeding.
+  string etag = 15;
+}

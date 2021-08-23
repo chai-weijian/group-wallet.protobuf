@@ -23,6 +23,7 @@ lint ()
     chaiweijian/groupwallet/userservice/v1/user.proto \
     chaiweijian/groupwallet/userservice/v1/user-aggregate-service.proto \
     chaiweijian/groupwallet/groupservice/v1/group.proto \
+    chaiweijian/groupwallet/groupservice/v1/member.proto \
     chaiweijian/groupwallet/groupservice/v1/group-aggregate-service.proto
 }
 lint
