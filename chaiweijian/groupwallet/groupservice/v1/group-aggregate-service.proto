@@ -55,6 +55,14 @@ service GroupAggregateService {
     option (google.api.method_signature) = "group,update_mask";
   }
 
+  // remove a member from this group.
+  rpc RemoveMember(RemoveMemberRequest) returns (Group) {
+    option (google.api.http) = {
+      post: "/v1/{group=groups/*}:removeMember"
+      body: "*"
+    };
+  }
+
   // Soft delete a group.
   rpc DeleteGroup(DeleteGroupRequest) returns (Group) {
     option (google.api.http) = {
@@ -100,6 +108,18 @@ message UpdateGroupRequest {
 
   // The list of fields to update.
   google.protobuf.FieldMask update_mask = 2;
+}
+
+// Request to remove a member from specified group.
+message RemoveMemberRequest {
+  // The name of the group to remove a member from.
+  string group = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "groupwallet.chaiweijian.com/Group"
+  ];
+
+  // The member to be removed.
+  string member = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to soft delete a group

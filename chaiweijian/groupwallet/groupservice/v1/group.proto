@@ -68,7 +68,7 @@ message Group {
   // The resource names for the group's current members.
   // The owner cannot modify this list directly.
   // To add a member, user need to send an invitation to a user.
-  // If the user agree to join, the system will add the user to this list.
+  // If user accept the invitation, the system will add the user to this list.
   // To remove a member, use RemoveMember custom method.
   repeated string members = 6 [
     (google.api.resource_reference) = {

@@ -22,6 +22,8 @@ lint ()
   api-linter -I $API_COMMON_PATH -I $INCLUDE_PATH \
     chaiweijian/groupwallet/userservice/v1/user.proto \
     chaiweijian/groupwallet/userservice/v1/user-aggregate-service.proto \
+    chaiweijian/groupwallet/userservice/v1/group-invitation.proto \
+    chaiweijian/groupwallet/userservice/v1/group-invitation-service.proto \
     chaiweijian/groupwallet/groupservice/v1/group.proto \
     chaiweijian/groupwallet/groupservice/v1/group-aggregate-service.proto
 }
