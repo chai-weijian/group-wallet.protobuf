@@ -43,6 +43,7 @@ service GroupInvitationService {
       post: "/v1/{name=users/*/groupInvitations/*}:accept"
       body: "*"
     };
+    option (google.api.method_signature) = "group_invitation";
   }
 
   // Reject the given group invitation.
@@ -51,6 +52,7 @@ service GroupInvitationService {
       post: "/v1/{name=users/*/groupInvitations/*}:reject"
       body: "*"
     };
+    option (google.api.method_signature) = "group_invitation";
   }
 
 }
@@ -71,22 +73,12 @@ message CreateGroupInvitationRequest {
 
 // Request to accept a group invitation
 message AcceptGroupInvitationRequest {
-  // The name of the group invitation to accept.
-  // Format: users/{user}/groupInvitations/{groupInvitation}
-  string name = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "groupwallet.chaiweijian.com/GroupInvitation"
-    }];
+  // The group invitation to accept.
+  GroupInvitation group_invitation = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to reject a group invitation
 message RejectGroupInvitationRequest {
-  // The name of the group invitation to reject.
-  // Format: users/{user}/groupInvitations/{groupInvitation}
-  string name = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "groupwallet.chaiweijian.com/GroupInvitation"
-    }];
+  // The group invitation to reject.
+  GroupInvitation group_invitation = 1 [(google.api.field_behavior) = REQUIRED];
 }
