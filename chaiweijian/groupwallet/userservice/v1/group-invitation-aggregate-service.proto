@@ -18,7 +18,7 @@ package chaiweijian.groupwallet.userservice.v1;
 
 option java_multiple_files = true;
 option java_package = "com.chaiweijian.groupwallet.userservice.v1";
-option java_outer_classname = "GroupInvitationServiceProto";
+option java_outer_classname = "GroupInvitationAggregateServiceProto";
 
 import "chaiweijian/groupwallet/userservice/v1/group-invitation.proto";
 import "google/api/annotations.proto";
@@ -27,7 +27,7 @@ import "google/api/field_behavior.proto";
 import "google/api/resource.proto";
 
 // Define the group invitation service.
-service GroupInvitationService {
+service GroupInvitationAggregateService {
   // Create a new group invitation.
   rpc CreateGroupInvitation(CreateGroupInvitationRequest) returns (GroupInvitation) {
     option (google.api.http) = {
