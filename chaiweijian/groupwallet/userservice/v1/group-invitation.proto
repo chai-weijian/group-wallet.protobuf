@@ -47,11 +47,14 @@ message GroupInvitation {
     // The default value. This value is used if the state is omitted.
     STATE_UNSPECIFIED = 0;
 
+    // The invitation is still pending, user haven't accept nor reject.
+    PENDING = 1;
+
     // The user accepted the invitation.
-    ACCEPTED = 1;
+    ACCEPTED = 2;
 
     // The user rejected the invitation.
-    REJECTED = 2;
+    REJECTED = 3;
   }
   // The current state of this group invitation.
   State state = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
