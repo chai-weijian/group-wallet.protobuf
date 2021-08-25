@@ -46,6 +46,16 @@ message User {
   // authentication provider. Currently using Firebase.
   string uid = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
 
+  // The resource names for the users currently joined group.
+  // The user cannot modify this list directly.
+  // To add a group, user need to receive and accept a group invitation.
+  // To remove a group, use RemoveGroup custom method.
+  repeated string groups = 5 [
+    (google.api.resource_reference) = {
+      type: "groupwallet.chaiweijian.com/Group"
+    },
+    (google.api.field_behavior) = OUTPUT_ONLY];
+
   // The aggregate version of this user. The system guarantee to increment
   // this value whenever this user change.
   int32 aggregate_version = 14 [(google.api.field_behavior) = OUTPUT_ONLY];
