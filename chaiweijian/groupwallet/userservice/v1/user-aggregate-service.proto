@@ -63,6 +63,13 @@ service UserAggregateService {
     option (google.api.method_signature) = "user,update_mask";
   }
 
+  // remove a group from this user.
+  rpc RemoveGroup(RemoveGroupRequest) returns (User) {
+    option (google.api.http) = {
+      post: "/v1/{user=users/*}:removeGroup"
+      body: "*"
+    };
+  }
 }
 
 // Request to get single user.
@@ -105,4 +112,16 @@ message UpdateUserRequest {
 
   // The list of fields to update.
   google.protobuf.FieldMask update_mask = 2;
+}
+
+// Request to remove a group from specified user.
+message RemoveGroupRequest {
+  // The name of the user to remove a group from.
+  string user = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference).type = "groupwallet.chaiweijian.com/User"
+  ];
+
+  // The group to be removed.
+  string group = 2 [(google.api.field_behavior) = REQUIRED];
 }
